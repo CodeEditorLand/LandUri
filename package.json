@@ -1,40 +1,5 @@
 {
-	"name": "vscode-uri",
-	"version": "0.0.1",
-	"private": false,
 	"description": "The URI implementation that is used by VS Code and its extensions",
-	"homepage": "https://github.com/CodeEditorLand/Foundation#readme",
-	"bugs": {
-		"url": "https://github.com/CodeEditorLand/Foundation/issues"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/CodeEditorLand/Foundation.git"
-	},
-	"license": "SEE LICENSE IN LICENSE",
-	"author": {
-		"name": "Playform",
-		"email": "Hello@Playform.Cloud",
-		"url": "https://playform.cloud"
-	},
-	"sideEffects": false,
-	"type": "module",
-	"exports": {
-		"browser": "./lib/esm/index.mjs",
-		"import": "./lib/esm/index.mjs",
-		"require": "./lib/umd/index.js",
-		"types": "./lib/umd/index.d.ts"
-	},
-	"main": "./lib/umd/index.js",
-	"typings": "./lib/umd/index",
-	"scripts": {
-		"clean": "rimraf lib",
-		"compile": "tsc -p ./src",
-		"pack-dev": "webpack",
-		"pack-production": "webpack --mode=production",
-		"prepublishOnly": "TypeScriptESBuild 'Source/**/*.ts'",
-		"prepublish": "npm run pack-production"
-	},
 	"devDependencies": {
 		"@types/mocha": "^10.0.2",
 		"@types/node": "16.x",
@@ -47,7 +12,23 @@
 		"webpack": "^5.88.2",
 		"webpack-cli": "^5.1.4"
 	},
-	"publishConfig": {
-		"access": "public"
-	}
+	"exports": {
+		"browser": "./lib/esm/index.mjs",
+		"import": "./lib/esm/index.mjs",
+		"require": "./lib/umd/index.js",
+		"types": "./lib/umd/index.d.ts"
+	},
+	"main": "./lib/umd/index.js",
+	"name": "vscode-uri",
+	"scripts": {
+		"clean": "rimraf lib",
+		"compile": "tsc -p ./src",
+		"pack-dev": "webpack",
+		"pack-production": "webpack --mode=production",
+		"prepublish": "npm run pack-production",
+		"prepublishOnly": "TypeScriptESBuild 'Source/**/*.ts'"
+	},
+	"sideEffects": false,
+	"type": "module",
+	"typings": "./lib/umd/index"
 }
