@@ -43,7 +43,7 @@
 		"rimraf": "^5.0.5",
 		"ts-loader": "^9.4.4",
 		"typescript": "^5.2.2",
-		"typescript-esbuild": "latest",
+		"typescript-esbuild": "0.4.5",
 		"webpack": "^5.88.2",
 		"webpack-cli": "^5.1.4"
 	},
