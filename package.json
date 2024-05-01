@@ -41,10 +41,10 @@
 	"devDependencies": {
 		"@playform/build": "0.0.7",
 		"@playform/document": "0.0.6",
-		"@types/node": "16.x",
-		"path-browserify": "^1.0.1",
-		"rimraf": "^5.0.5",
-		"ts-loader": "^9.4.4"
+		"@types/node": "20.x",
+		"path-browserify": "1.0.1",
+		"rimraf": "5.0.5",
+		"ts-loader": "9.5.1"
 	},
 	"publishConfig": {
 		"access": "public"
