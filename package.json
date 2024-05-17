@@ -1,27 +1,7 @@
 {
 	"name": "vscode-uri",
-	"version": "0.0.1",
-	"private": false,
 	"description": "The URI implementation that is used by VS Code and its extensions",
-	"keywords": [
-		"land"
-	],
-	"homepage": "HTTPS://GitHub.Com/CodeEditorLand/LandURI#readme",
-	"bugs": {
-		"url": "HTTPS://GitHub.Com/CodeEditorLand/LandURI/issues"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+HTTPS://github.com/CodeEditorLand/LandURI.git"
-	},
-	"license": "SEE LICENSE IN LICENSE",
-	"author": {
-		"name": "🛬 Land —",
-		"email": "Land@PlayForm.Cloud",
-		"url": "HTTPS://Land.PlayForm.Cloud"
-	},
 	"sideEffects": false,
-	"type": "module",
 	"exports": {
 		"browser": "./lib/esm/index.mjs",
 		"import": "./lib/esm/index.mjs",
@@ -40,13 +20,9 @@
 	},
 	"devDependencies": {
 		"@playform/build": "0.0.7",
-		"@playform/document": "0.0.6",
 		"@types/node": "20.x",
 		"path-browserify": "1.0.1",
 		"rimraf": "5.0.5",
 		"ts-loader": "9.5.1"
-	},
-	"publishConfig": {
-		"access": "public"
 	}
 }
