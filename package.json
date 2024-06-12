@@ -2,9 +2,9 @@
 	"description": "The URI implementation that is used by VS Code and its extensions",
 	"devDependencies": {
 		"@types/node": "20.x",
-		"path-browserify": "^1.0.1",
-		"rimraf": "^5.0.7",
-		"ts-loader": "^9.5.1"
+		"path-browserify": "1.0.1",
+		"rimraf": "5.0.7",
+		"ts-loader": "9.5.1"
 	},
 	"exports": {
 		"browser": "./lib/esm/index.mjs",
