@@ -17,9 +17,9 @@
 		"pack-production": "webpack --mode=production"
 	},
 	"devDependencies": {
-		"@types/node": "16.x",
-		"path-browserify": "^1.0.1",
-		"rimraf": "^5.0.5",
-		"ts-loader": "^9.4.4"
+		"@types/node": "20.x",
+		"path-browserify": "1.0.1",
+		"rimraf": "6.0.1",
+		"ts-loader": "9.5.1"
 	}
 }
