@@ -17,7 +17,7 @@ scheme     authority       path        query   fragment
   urn:example:animal:ferret:nose
 ```
 
-## Usage
+## 🛠️ Usage
 
 ```js
 import { URI } from "vscode-uri";
