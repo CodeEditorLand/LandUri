@@ -11,6 +11,7 @@ import { CharCode } from "./charCode";
 import { URI } from "./uri";
 
 const posixPath = nodePath.posix || nodePath;
+
 const slash = "/";
 
 export namespace Utils {
@@ -46,12 +47,15 @@ export namespace Utils {
 	 */
 	export function resolvePath(uri: URI, ...paths: string[]): URI {
 		let path = uri.path;
+
 		let slashAdded = false;
+
 		if (path[0] !== slash) {
 			path = slash + path; // make the path abstract: for posixPath.resolve the first segments has to be absolute or cwd is used.
 			slashAdded = true;
 		}
 		let resolvedPath = posixPath.resolve(path, ...paths);
+
 		if (slashAdded && resolvedPath[0] === slash && !uri.authority) {
 			resolvedPath = resolvedPath.substring(1);
 		}
@@ -71,6 +75,7 @@ export namespace Utils {
 			return uri;
 		}
 		let path = posixPath.dirname(uri.path);
+
 		if (path.length === 1 && path.charCodeAt(0) === CharCode.Period) {
 			path = "";
 		}
