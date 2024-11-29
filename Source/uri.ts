@@ -57,6 +57,7 @@ function _schemeFix(scheme: string, _strict: boolean): string {
 	if (!scheme && !_strict) {
 		return "file";
 	}
+
 	return scheme;
 }
 
@@ -75,8 +76,10 @@ function _referenceResolution(scheme: string, path: string): string {
 			} else if (path[0] !== _slash) {
 				path = _slash + path;
 			}
+
 			break;
 	}
+
 	return path;
 }
 
@@ -107,9 +110,11 @@ export class URI implements UriComponents {
 		if (thing instanceof URI) {
 			return true;
 		}
+
 		if (!thing) {
 			return false;
 		}
+
 		return (
 			typeof (<URI>thing).authority === "string" &&
 			typeof (<URI>thing).fragment === "string" &&
@@ -179,18 +184,26 @@ export class URI implements UriComponents {
 	) {
 		if (typeof schemeOrData === "object") {
 			this.scheme = schemeOrData.scheme || _empty;
+
 			this.authority = schemeOrData.authority || _empty;
+
 			this.path = schemeOrData.path || _empty;
+
 			this.query = schemeOrData.query || _empty;
+
 			this.fragment = schemeOrData.fragment || _empty;
 			// no validation because it's this URI
 			// that creates uri components.
 			// _validateUri(this);
 		} else {
 			this.scheme = _schemeFix(schemeOrData, _strict);
+
 			this.authority = authority || _empty;
+
 			this.path = _referenceResolution(this.scheme, path || _empty);
+
 			this.query = query || _empty;
+
 			this.fragment = fragment || _empty;
 
 			_validateUri(this, _strict);
@@ -227,6 +240,7 @@ export class URI implements UriComponents {
 		// if (this.scheme !== 'file') {
 		// 	console.warn(`[UriError] calling fsPath with scheme ${this.scheme}`);
 		// }
+
 		return uriToFsPath(this, false);
 	}
 
@@ -234,9 +248,13 @@ export class URI implements UriComponents {
 
 	with(change: {
 		scheme?: string;
+
 		authority?: string | null;
+
 		path?: string | null;
+
 		query?: string | null;
+
 		fragment?: string | null;
 	}): URI {
 		if (!change) {
@@ -250,21 +268,25 @@ export class URI implements UriComponents {
 		} else if (scheme === null) {
 			scheme = _empty;
 		}
+
 		if (authority === undefined) {
 			authority = this.authority;
 		} else if (authority === null) {
 			authority = _empty;
 		}
+
 		if (path === undefined) {
 			path = this.path;
 		} else if (path === null) {
 			path = _empty;
 		}
+
 		if (query === undefined) {
 			query = this.query;
 		} else if (query === null) {
 			query = _empty;
 		}
+
 		if (fragment === undefined) {
 			fragment = this.fragment;
 		} else if (fragment === null) {
@@ -298,6 +320,7 @@ export class URI implements UriComponents {
 		if (!match) {
 			return new Uri(_empty, _empty, _empty, _empty, _empty);
 		}
+
 		return new Uri(
 			match[2] || _empty,
 			percentDecode(match[4] || _empty),
@@ -318,12 +341,17 @@ export class URI implements UriComponents {
 	 * interpreted (# and ?). See the following sample:
 	 * ```ts
 	const good = URI.file('/coding/c#/project1');
+
 	good.scheme === 'file';
+
 	good.path === '/coding/c#/project1';
+
 	good.fragment === '';
 
 	const bad = URI.parse('file://' + '/coding/c#/project1');
+
 	bad.scheme === 'file';
+
 	bad.path === '/coding/c'; // path is now broken
 	bad.fragment === '/project1';
 	```
@@ -347,9 +375,11 @@ export class URI implements UriComponents {
 
 			if (idx === -1) {
 				authority = path.substring(2);
+
 				path = _slash;
 			} else {
 				authority = path.substring(2, idx);
+
 				path = path.substring(idx) || _slash;
 			}
 		}
@@ -359,9 +389,13 @@ export class URI implements UriComponents {
 
 	static from(components: {
 		scheme: string;
+
 		authority?: string;
+
 		path?: string;
+
 		query?: string;
+
 		fragment?: string;
 	}): URI {
 		const result = new Uri(
@@ -371,6 +405,7 @@ export class URI implements UriComponents {
 			components.query,
 			components.fragment,
 		);
+
 		_validateUri(result, true);
 
 		return result;
@@ -398,11 +433,15 @@ export class URI implements UriComponents {
 	}
 
 	static revive(data: UriComponents | URI): URI;
+
 	static revive(data: UriComponents | URI | undefined): URI | undefined;
+
 	static revive(data: UriComponents | URI | null): URI | null;
+
 	static revive(
 		data: UriComponents | URI | undefined | null,
 	): URI | undefined | null;
+
 	static revive(
 		data: UriComponents | URI | undefined | null,
 	): URI | undefined | null {
@@ -412,7 +451,9 @@ export class URI implements UriComponents {
 			return data;
 		} else {
 			const result = new Uri(data);
+
 			result._formatted = (<UriState>data).external;
+
 			result._fsPath =
 				(<UriState>data)._sep === _pathSepMarker
 					? (<UriState>data).fsPath
@@ -425,16 +466,23 @@ export class URI implements UriComponents {
 
 export interface UriComponents {
 	scheme: string;
+
 	authority: string;
+
 	path: string;
+
 	query: string;
+
 	fragment: string;
 }
 
 interface UriState extends UriComponents {
 	$mid: number;
+
 	external: string;
+
 	fsPath: string;
+
 	_sep: 1 | undefined;
 }
 
@@ -443,12 +491,14 @@ const _pathSepMarker = isWindows ? 1 : undefined;
 // This class exists so that URI is compatible with vscode.Uri (API).
 class Uri extends URI {
 	_formatted: string | null = null;
+
 	_fsPath: string | null = null;
 
 	override get fsPath(): string {
 		if (!this._fsPath) {
 			this._fsPath = uriToFsPath(this, false);
 		}
+
 		return this._fsPath;
 	}
 
@@ -457,6 +507,7 @@ class Uri extends URI {
 			if (!this._formatted) {
 				this._formatted = _asFormatted(this, false);
 			}
+
 			return this._formatted;
 		} else {
 			// we don't cache that
@@ -471,8 +522,10 @@ class Uri extends URI {
 		// cached state
 		if (this._fsPath) {
 			res.fsPath = this._fsPath;
+
 			res._sep = _pathSepMarker;
 		}
+
 		if (this._formatted) {
 			res.external = this._formatted;
 		}
@@ -480,18 +533,23 @@ class Uri extends URI {
 		if (this.path) {
 			res.path = this.path;
 		}
+
 		if (this.scheme) {
 			res.scheme = this.scheme;
 		}
+
 		if (this.authority) {
 			res.authority = this.authority;
 		}
+
 		if (this.query) {
 			res.query = this.query;
 		}
+
 		if (this.fragment) {
 			res.fragment = this.fragment;
 		}
+
 		return res;
 	}
 }
@@ -552,6 +610,7 @@ function encodeURIComponentFast(
 				res += encodeURIComponent(
 					uriComponent.substring(nativeEncodePos, pos),
 				);
+
 				nativeEncodePos = -1;
 			}
 			// check if we write into a new string (by default we try to return the param)
@@ -573,6 +632,7 @@ function encodeURIComponentFast(
 					res += encodeURIComponent(
 						uriComponent.substring(nativeEncodePos, pos),
 					);
+
 					nativeEncodePos = -1;
 				}
 
@@ -602,6 +662,7 @@ function encodeURIComponentMinimal(path: string): string {
 			if (res === undefined) {
 				res = path.substr(0, pos);
 			}
+
 			res += encodeTable[code];
 		} else {
 			if (res !== undefined) {
@@ -609,6 +670,7 @@ function encodeURIComponentMinimal(path: string): string {
 			}
 		}
 	}
+
 	return res !== undefined ? res : path;
 }
 
@@ -639,9 +701,11 @@ export function uriToFsPath(uri: URI, keepDriveLetterCasing: boolean): string {
 		// other path
 		value = uri.path;
 	}
+
 	if (isWindows) {
 		value = value.replace(/\//g, "\\");
 	}
+
 	return value;
 }
 
@@ -659,19 +723,25 @@ function _asFormatted(uri: URI, skipEncoding: boolean): string {
 
 	if (scheme) {
 		res += scheme;
+
 		res += ":";
 	}
+
 	if (authority || scheme === "file") {
 		res += _slash;
+
 		res += _slash;
 	}
+
 	if (authority) {
 		let idx = authority.indexOf("@");
 
 		if (idx !== -1) {
 			// <user>@<auth>
 			const userinfo = authority.substr(0, idx);
+
 			authority = authority.substr(idx + 1);
+
 			idx = userinfo.lastIndexOf(":");
 
 			if (idx === -1) {
@@ -679,12 +749,17 @@ function _asFormatted(uri: URI, skipEncoding: boolean): string {
 			} else {
 				// <user>:<pass>@<auth>
 				res += encoder(userinfo.substr(0, idx), false, false);
+
 				res += ":";
+
 				res += encoder(userinfo.substr(idx + 1), false, true);
 			}
+
 			res += "@";
 		}
+
 		authority = authority.toLowerCase();
+
 		idx = authority.lastIndexOf(":");
 
 		if (idx === -1) {
@@ -692,9 +767,11 @@ function _asFormatted(uri: URI, skipEncoding: boolean): string {
 		} else {
 			// <auth>:<port>
 			res += encoder(authority.substr(0, idx), false, true);
+
 			res += authority.substr(idx);
 		}
 	}
+
 	if (path) {
 		// lower-case windows drive letters in /C:/fff or C:/fff
 		if (
@@ -717,16 +794,21 @@ function _asFormatted(uri: URI, skipEncoding: boolean): string {
 		// encode the rest of the path
 		res += encoder(path, true, false);
 	}
+
 	if (query) {
 		res += "?";
+
 		res += encoder(query, false, false);
 	}
+
 	if (fragment) {
 		res += "#";
+
 		res += !skipEncoding
 			? encodeURIComponentFast(fragment, false, false)
 			: fragment;
 	}
+
 	return res;
 }
 
@@ -750,6 +832,7 @@ function percentDecode(str: string): string {
 	if (!str.match(_rEncodedAsHex)) {
 		return str;
 	}
+
 	return str.replace(_rEncodedAsHex, (match) =>
 		decodeURIComponentGraceful(match),
 	);

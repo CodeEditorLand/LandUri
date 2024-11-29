@@ -17,5 +17,6 @@ if (typeof process === "object") {
 	isWindows = process.platform === "win32";
 } else if (typeof navigator === "object") {
 	let userAgent = navigator.userAgent;
+
 	isWindows = userAgent.indexOf("Windows") >= 0;
 }
