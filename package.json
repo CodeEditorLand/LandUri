@@ -1,4 +1,5 @@
 {
+	"dependencies": {},
 	"description": "The URI implementation that is used by VS Code and its extensions",
 	"devDependencies": {
 		"@types/node": "22.10.1",
@@ -13,7 +14,7 @@
 		"types": "./lib/umd/index.d.ts"
 	},
 	"main": "./lib/umd/index.js",
-	"name": "vscode-uri",
+	"name": "@codeeditorland/uri",
 	"scripts": {
 		"clean": "rimraf lib",
 		"compile": "tsc -p ./src",
